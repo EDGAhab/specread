@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Score SpecRead v2.1 main eval responses.
+"""Score SpecRead v1 main eval responses.
 
 Pre-registered scoring rule (EVAL_PROTOCOL.md):
 - exact_value: correct iff normalized response == normalized gold
@@ -20,11 +20,11 @@ adjudications.json (after review), scores_main_report input.
 import json, os, re, csv
 from collections import defaultdict
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = os.path.join(ROOT, "data")
-RECORDS = os.path.join(ROOT, "eval", "records")
-RESP = {"gemini": os.path.join(RECORDS, "responses_main_gemini_v2.jsonl"),
-        "mistral": os.path.join(RECORDS, "responses_main_mistral_v2.jsonl")}
+BASE = os.path.expanduser("~/workspace/specbench")
+BUILD = os.path.join(BASE, "build")
+EVAL = os.path.join(BUILD, "eval")
+RESP = {"gemini": os.path.join(EVAL, "responses_main_gemini_v2.jsonl"),
+        "mistral": os.path.join(EVAL, "responses_main_mistral_v2.jsonl")}
 
 T3_CATS = ["NUMERIC_MISMATCH", "RULE_INVERSION", "CROSSREF_CONFLICT", "MISSING_CONDITION"]
 T4_CATS = ["NUMERIC_MISMATCH", "RULE_INVERSION", "CROSSREF_CONFLICT", "MISSING_CONDITION"]
@@ -41,7 +41,7 @@ documented""".split())
 def load_questions():
     qs = {}
     for fn in ["spec_read_v2_1.jsonl", "distractors_v2.jsonl"]:
-        with open(os.path.join(DATA, fn)) as fh:
+        with open(os.path.join(BUILD, fn)) as fh:
             for line in fh:
                 q = json.loads(line)
                 qs[q["id"]] = q
@@ -135,6 +135,15 @@ def score_loccat(resp, gold):
         loc_ok, amb = False, False
     else:
         loc_ok, amb = False, True
+    # precision constraint (2026-09-26): a citation that quotes far more than
+    # the gold location can game the recall-style overlap check above. If the
+    # parsed location field has >5x the gold location's distinctive tokens,
+    # route to manual adjudication instead of auto-scoring.
+    if not amb and gtoks:
+        cited_toks = distinctive_tokens(loc or "")
+        if len(cited_toks) > 5 * len(gtoks):
+            amb = True
+            loc_note += f" PRECISION_FLAG cited={len(cited_toks)} gold={len(gtoks)}"
     correct = bool(cat_ok and loc_ok and not amb)
     note = cat_note + " " + loc_note
     return correct, amb, note
@@ -163,7 +172,7 @@ def score_distractor(resp):
 
 def main():
     qs = load_questions()
-    adj_path = os.path.join(RECORDS, "adjudications.json")
+    adj_path = os.path.join(EVAL, "adjudications.json")
     adjud = {}
     if os.path.exists(adj_path):
         with open(adj_path) as fh:
@@ -176,9 +185,6 @@ def main():
     sha_check = defaultdict(set)  # qid -> set of prompt sha
 
     for model, path in RESP.items():
-        if not os.path.exists(path):
-            print(f"note: {path} not found, skipping model {model!r}")
-            continue
         adj_m = adjud.get(model, {})
         with open(path) as fh:
             for line in fh:
@@ -247,11 +253,11 @@ def main():
                 else:
                     raise ValueError(af)
 
-    with open(os.path.join(RECORDS, "scores_main.csv"), "w", newline="") as fh:
+    with open(os.path.join(EVAL, "scores_main.csv"), "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["question_id", "model", "ip", "answer_format", "result", "note"])
         w.writerows(rows)
-    with open(os.path.join(RECORDS, "ambiguous.jsonl"), "w") as fh:
+    with open(os.path.join(EVAL, "ambiguous.jsonl"), "w") as fh:
         for a in ambiguous:
             fh.write(json.dumps(a, ensure_ascii=False) + "\n")
 
@@ -278,7 +284,7 @@ def main():
     print(f"ambiguous (needs adjudication): {len(ambiguous)} -> ambiguous.jsonl")
 
     # stash aggregate stats for the report builder
-    with open(os.path.join(RECORDS, "agg.json"), "w") as fh:
+    with open(os.path.join(EVAL, "agg.json"), "w") as fh:
         json.dump({"per": {m: {str(t): per[m][t] for t in per[m]} for m in per},
                  "perip": {m: {ip: perip[m][ip] for ip in perip[m]} for m in perip},
                  "fp": {m: fp[m] for m in fp},

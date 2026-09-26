@@ -1,40 +1,592 @@
 {
  "mistral": {
-  "aes-t3-004": {
+  "aes-t4-005": {
    "verdict": "OK",
-   "rationale": "Category NUMERIC_MISMATCH matches gold. Location cites both conflicting statements: the CTRL_SHADOWED header reset default 0x10fd and the field table value 0x1 for PRNG_RESEED_RATE bits 14:12. Low token overlap is a phrasing artifact, not a miss."
+   "rationale": "Right category NUMERIC_MISMATCH; cites the spec's row-2 shift-by-2 rule against the RTL's shift-by-3 offset.",
+   "template": "v2.1",
+   "date": "2026-09-26"
   },
-  "aon_timer-t3-009": {
+  "aes-t4-008": {
+   "verdict": "OK",
+   "rationale": "Right category RULE_INVERSION; cites the row-3 shift rule and the RTL's wrong decryption shift (right by 1 instead of 3).",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-011": {
+   "verdict": "OK",
+   "rationale": "Right category RULE_INVERSION; cites the ShiftRows offset rule against the RTL's wrong row-1 shift amount.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "i2c-t4-005": {
+   "verdict": "OK",
+   "rationale": "Right category CROSSREF_CONFLICT; cites the spec's 'free time is t_BUF, set in TIMING4.T_BUF' against the RTL that no longer references t_BUF.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "i2c-t4-017": {
+   "verdict": "OK",
+   "rationale": "Right category RULE_INVERSION; cites the spec's SDA-release-during-9th-bit rule against the RTL's hardcoded-low SDA mutation.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_host-t4-006": {
    "verdict": "WRONG",
-   "rationale": "Category matches but location quotes only the timeout-window consequence, never the mutated '~200MHz clock' statement that creates the contradiction. Does not identify the injected inconsistency."
+   "rationale": "Category wrong (RULE_INVERSION vs gold NUMERIC_MISMATCH); points at the SD-line ordering passage instead of the within-byte MSB-first rule.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-001": {
+   "verdict": "WRONG",
+   "rationale": "Response claims RULE_INVERSION but gold is NUMERIC_MISMATCH; category mismatch decides.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-012": {
+   "verdict": "OK",
+   "rationale": "Response names RULE_INVERSION and contrasts the spec's row-3-by-3 ShiftRows rule with RTL shifting data_i[3] by 2'h1, identifying the same contradiction.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "i2c-t4-007": {
+   "verdict": "WRONG",
+   "rationale": "Response claims RULE_INVERSION but gold is MISSING_CONDITION; category mismatch decides.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "pattgen-t4-004": {
+   "verdict": "WRONG",
+   "rationale": "Response claims RULE_INVERSION but gold is MISSING_CONDITION; category mismatch decides.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-006": {
+   "verdict": "WRONG",
+   "rationale": "Category mismatch: response says RULE_INVERSION but gold is NUMERIC_MISMATCH.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-007": {
+   "verdict": "OK",
+   "rationale": "Correct category (RULE_INVERSION) and points at the ShiftRows offset rule and the RTL lines implementing the wrong conditional shift, identifying the same contradiction.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_host-t4-013": {
+   "verdict": "WRONG",
+   "rationale": "Category mismatch: response says RULE_INVERSION but gold is MISSING_CONDITION.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_host-t4-017": {
+   "verdict": "WRONG",
+   "rationale": "Category mismatch: response says RULE_INVERSION but gold is NUMERIC_MISMATCH, and it cites the dual/quad SD[0] sentence instead of the MSB-first rule.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_host-t4-018": {
+   "verdict": "WRONG",
+   "rationale": "Category mismatch: response says RULE_INVERSION but gold is NUMERIC_MISMATCH.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-002": {
+   "verdict": "WRONG",
+   "rationale": "Correct category (NUMERIC_MISMATCH) but the evidence cites only line 22 (FWD branch 2'h3, original correct code) as the violation, missing the actual mutation on line 23 (INV branch 2'h1→2'h2).",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-003": {
+   "verdict": "WRONG",
+   "rationale": "Correct category (NUMERIC_MISMATCH) but the RTL evidence misquotes both mutated lines (claims 2'h1 for encryption and 2'h2 for decryption; actual mutated code has 2'h2 and 2'h3) and never identifies the real change (FWD branch 2'h1→2'h2 on line 27).",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-004": {
+   "verdict": "OK",
+   "rationale": "Correct category (NUMERIC_MISMATCH) and accurately quotes the mutated lines 27-28, including the changed INV-branch amount (2'h2), identifying the same ShiftRows numeric violation as gold.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-009": {
+   "verdict": "OK",
+   "rationale": "Correct category (RULE_INVERSION) and quotes the exact mutated lines 22-23 where the CIPH_INV/CIPH_FWD comparisons are swapped, identifying the same ShiftRows inversion as gold.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "aes-t4-010": {
+   "verdict": "OK",
+   "rationale": "Correct category (RULE_INVERSION) and points at the ShiftRows offset rule and RTL lines 27-28 where the CIPH_FWD/CIPH_INV shift amounts are swapped.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "i2c-t4-001": {
+   "verdict": "WRONG",
+   "rationale": "Category mismatch: response says RULE_INVERSION but gold is NUMERIC_MISMATCH.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_device-t4-006": {
+   "verdict": "WRONG",
+   "rationale": "Category mismatch: response says RULE_INVERSION but gold is MISSING_CONDITION.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_host-t4-005": {
+   "verdict": "WRONG",
+   "rationale": "Category mismatch: response says RULE_INVERSION but gold is NUMERIC_MISMATCH.",
+   "template": "v2.1",
+   "date": "2026-09-26"
   },
   "i2c-t4-002": {
    "verdict": "WRONG",
-   "rationale": "Category RULE_INVERSION != gold NUMERIC_MISMATCH. The mutation is an off-by-one terminal comparison (== 30'd1 -> == 30'd2), a numeric mismatch."
-  },
-  "aes-t3-018": {
-   "verdict": "WRONG",
-   "rationale": "Category RULE_INVERSION != gold MISSING_CONDITION. Location quotes unrelated manual-mode bullets."
-  },
-  "aon_timer-t3-005": {
-   "verdict": "WRONG",
-   "rationale": "Category CROSSREF_CONFLICT != gold NUMERIC_MISMATCH. Location text is confused and does not identify the INTR_STATE reset-default contradiction."
+   "rationale": "Category RULE_INVERSION != gold NUMERIC_MISMATCH. The mutation is an off-by-one terminal comparison (== 30'd1 -> == 30'd2), a numeric mismatch.",
+   "template": "v2.1",
+   "date": "2026-09-26"
   },
   "pattgen-t4-002": {
    "verdict": "OK",
-   "rationale": "Category NUMERIC_MISMATCH matches gold. Location correctly pairs the spec rule ('one less than the pattern length') with the mutated RTL line (len_q + 6'h1)."
+   "rationale": "Category NUMERIC_MISMATCH matches gold. Location correctly pairs the spec rule ('one less than the pattern length') with the mutated RTL line (len_q + 6'h1).",
+   "template": "v2.1",
+   "date": "2026-09-26"
   },
   "i2c-t4-012": {
    "verdict": "WRONG",
-   "rationale": "Category RULE_INVERSION != gold NUMERIC_MISMATCH."
+   "rationale": "Category RULE_INVERSION != gold NUMERIC_MISMATCH.",
+   "template": "v2.1",
+   "date": "2026-09-26"
   },
   "spi_device-t4-002": {
    "verdict": "WRONG",
-   "rationale": "Category CROSSREF_CONFLICT != gold NUMERIC_MISMATCH. Location does not identify the mutated line."
+   "rationale": "Category CROSSREF_CONFLICT != gold NUMERIC_MISMATCH. Location does not identify the mutated line.",
+   "template": "v2.1",
+   "date": "2026-09-26"
   },
   "spi_device-t4-003": {
    "verdict": "WRONG",
-   "rationale": "Category RULE_INVERSION != gold NUMERIC_MISMATCH. Location does not identify the mutated line."
+   "rationale": "Category RULE_INVERSION != gold NUMERIC_MISMATCH. Location does not identify the mutated line.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "i2c-t4-016": {
+   "verdict": "WRONG",
+   "rationale": "Location exactly right (line 129, tsu_sta_i subtracted instead of thd_dat_i) but category NUMERIC_MISMATCH != gold CROSSREF_CONFLICT; per protocol right-location/wrong-category is WRONG.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "i2c-t4-019": {
+   "verdict": "WRONG",
+   "rationale": "Location exactly right (line 845, byte_index==9'd2 instead of R) but category CROSSREF_CONFLICT != gold NUMERIC_MISMATCH; per protocol WRONG.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_device-t4-001": {
+   "verdict": "WRONG",
+   "rationale": "Response claims missing BUSY handling in the always_ff block; never identifies the planted sck_toggle reset-to-1 mutation, and category MISSING_CONDITION != gold NUMERIC_MISMATCH.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_device-t4-011": {
+   "verdict": "WRONG",
+   "rationale": "Response cites csb_toggle <= 1'b0 without identifying the deleted CSb-deassertion capture arm, and category CROSSREF_CONFLICT != gold MISSING_CONDITION.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_device-t4-015": {
+   "verdict": "WRONG",
+   "rationale": "Response discusses rx_order correlation vaguely; never identifies the planted mutation (data_valid_o at cnt==2 vs cnt==1) and picks CROSSREF_CONFLICT instead of NUMERIC_MISMATCH.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_host-t4-015": {
+   "verdict": "WRONG",
+   "rationale": "Response hand-waves about FIFO enforcement and tx_flush_o; never identifies the deleted wr_en load arm of sr_d, and category CROSSREF_CONFLICT != gold MISSING_CONDITION.",
+   "template": "v2.1",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-018": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (RULE_INVERSION vs gold MISSING_CONDITION); quotes describe queueing rules but do not isolate the dropped precondition.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-023": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (CROSSREF_CONFLICT vs gold MISSING_CONDITION); right sequence quoted but mislabeled, taxonomy overlap does not excuse strict category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "rv_timer-t3-014": {
+   "verdict": "OK",
+   "rationale": "Right category RULE_INVERSION; quotes capture the inversion (passes comparison value vs greater than comparison value) directly.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "i2c-t3-015": {
+   "verdict": "OK",
+   "rationale": "Right category CROSSREF_CONFLICT; quotes describe the timeout counter behavior from two sections, relevant to the conflict.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-011": {
+   "verdict": "OK",
+   "rationale": "Right category CROSSREF_CONFLICT; quotes are directly contradictory (STR only, not DTR vs full-cycle enables DTR).",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-015": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (NUMERIC_MISMATCH vs gold CROSSREF_CONFLICT); quotes timing statements but does not pin the cross-document conflict.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-012": {
+   "verdict": "OK",
+   "rationale": "Right category CROSSREF_CONFLICT; quotes directly contradictory (halt until cleared vs continue without waiting).",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-007": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (CROSSREF_CONFLICT vs gold RULE_INVERSION); quotes describe full-cycle mode but do not identify the inversion.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-017": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (CROSSREF_CONFLICT vs gold MISSING_CONDITION); quotes CSB/CSID text without isolating the missing condition.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "i2c-t3-014": {
+   "verdict": "OK",
+   "rationale": "Right category CROSSREF_CONFLICT; quotes directly contradictory (single bit transfer vs entire transaction).",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-007": {
+   "verdict": "OK",
+   "rationale": "Right category RULE_INVERSION; quotes the command-parser matching rule, relevant to the inversion.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-010": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (CROSSREF_CONFLICT vs gold RULE_INVERSION); START byte quotes do not clearly identify the inversion.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-008": {
+   "verdict": "OK",
+   "rationale": "Right category RULE_INVERSION; quotes the passthrough gate update rule, relevant to the inversion.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-020": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (CROSSREF_CONFLICT vs gold MISSING_CONDITION); quotes CS control text without isolating the missing condition.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-014": {
+   "verdict": "OK",
+   "rationale": "Right category CROSSREF_CONFLICT; quotes directly contradictory (raised immediately vs keep asserted).",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-014": {
+   "verdict": "OK",
+   "rationale": "Right category CROSSREF_CONFLICT; quotes set-by-HW vs cleared-by-upload, relevant to the cross-document conflict.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-009": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (CROSSREF_CONFLICT vs gold RULE_INVERSION); quotes are mere watermark definitions, no inversion identified.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-012": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (NUMERIC_MISMATCH vs gold CROSSREF_CONFLICT); the 11-vs-12 quotes do show a numeric discrepancy but gold labels it cross-document conflict; strict category required.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-019": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-006": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-013": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted NUMERIC_MISMATCH, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "i2c-t3-005": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-016": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-025": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-016": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-011": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted NUMERIC_MISMATCH, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-009": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted NUMERIC_MISMATCH, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-025": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-018": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "aes-t3-018": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted RULE_INVERSION, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-006": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "aes-t3-007": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "uart-t3-009": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-003": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-024": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted RULE_INVERSION, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-020": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted NUMERIC_MISMATCH, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-011": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted NUMERIC_MISMATCH, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-017": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted MISSING_CONDITION, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-026": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-010": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted CROSSREF_CONFLICT, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-021": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted NUMERIC_MISMATCH, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "aes-t3-017": {
+   "verdict": "WRONG",
+   "rationale": "Category wrong (predicted RULE_INVERSION, gold category mismatch); strict requires correct category.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-002": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes LEN field table and LEN+1 formula, relevant to the numeric issue.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-019": {
+   "verdict": "OK",
+   "rationale": "Category CROSSREF_CONFLICT correct; quotes the ERR_CODE link text resolving to #intr_state, matching the mutated link.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "i2c-t3-010": {
+   "verdict": "OK",
+   "rationale": "Category RULE_INVERSION correct; quotes capture the buffer enable logic for High vs Low, relevant to the inversion.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-019": {
+   "verdict": "WRONG",
+   "rationale": "Category correct but location wrong: response discusses kmac_done interrupt vs polling, not the mutated ERR_CODE link that is the gold contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "aon_timer-t3-003": {
+   "verdict": "OK",
+   "rationale": "Category CROSSREF_CONFLICT correct; quotes the WDOG_CTRL prescaler step, relevant to the mutated initialization step.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-003": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes 0-to-16 cycles vs 8 dummy cycles, showing the numeric discrepancy.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-020": {
+   "verdict": "OK",
+   "rationale": "Category CROSSREF_CONFLICT correct; quotes the KEY_SHARE1_0 link text, matching the mutated link anchor.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-009": {
+   "verdict": "OK",
+   "rationale": "Category RULE_INVERSION correct; response explicitly identifies the rising/falling edge contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "aes-t3-001": {
+   "verdict": "WRONG",
+   "rationale": "Category correct but location incomplete: quotes 9/11/12 rounds but not the conflicting 12/14/16 cycles figure; does not isolate the contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "rv_timer-t3-011": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; explicitly identifies step resval 0x2 vs reset default 0x1, the gold contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-004": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes locality 0-5 vs greater-than-4, showing the numeric range discrepancy.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "aes-t3-006": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes KEY_LEN table with 0x2 values and one-hot codes, relevant to the duplicate-value mutation.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-001": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes the (512-32-64)/32 formula and 12 times, capturing the 12-vs-13 discrepancy.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-003": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes (CLKDIV+2) vs 2*(CLK_DIV+1), showing the formula discrepancy.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-022": {
+   "verdict": "OK",
+   "rationale": "Category CROSSREF_CONFLICT correct; quotes the Empty-and-Full-status link text, matching the mutated link.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "aes-t3-005": {
+   "verdict": "WRONG",
+   "rationale": "Category correct but location vague: mentions START bit 0 but does not clearly identify the 0xf header vs 0x0 field-table contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-002": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes 512B payload size and maximum payload size, relevant to the numeric issue.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-004": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes sixteen vs eight SCK cycles, a direct numeric contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "hmac-t3-005": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes DIGEST_0..8 vs i<8 loop, a direct 9-vs-8 numeric contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "kmac-t3-014": {
+   "verdict": "WRONG",
+   "rationale": "Category correct but location wrong: quotes static/dynamic interface text, not the SHAKE/cSHAKE vs SHA3/KMAC rule inversion that is the gold contradiction.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_device-t3-005": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes first-11 vs remaining-13 command entries, showing numeric values.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
+  },
+  "spi_host-t3-001": {
+   "verdict": "OK",
+   "rationale": "Category NUMERIC_MISMATCH correct; quotes COMMAND.LEN+2 vs LEN field range, relevant to the numeric description.",
+   "template": "v2.1-new",
+   "date": "2026-09-26"
   }
  }
 }
