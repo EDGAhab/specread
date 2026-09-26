@@ -1,0 +1,3 @@
+T4-003 polarity=0 active: orig pcl=1 mut pcl=0
+T4-003 RESULT: DIFFER -- orig pcl follows pcl_int, mutated inverts it
+/home/hatch/workspace/specbench/build/sim_t4/pattgen-003/tb.sv:25: $finish called at 136 (1s)

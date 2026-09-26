@@ -1,0 +1,1 @@
+$ iverilog -g2012 -o sim.vvp staged_pattgen_pattgen_ctrl_pkg.sv orig.sv mut.sv tb.sv

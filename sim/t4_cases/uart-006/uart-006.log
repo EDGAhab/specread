@@ -1,0 +1,5 @@
+Q006 during reset: idle_o=1 idle_m=0
+Q006 after reset, line idle: idle_o=1 idle_m=0
+Q006 phantom byte: seen_o=0 data_o=xx | seen_m=0 data_m=xx
+Q006 RESULT: DIFFER -- mutated RX comes out of reset non-idle (self-aborts ~7 bit-times later, never delivering)
+tb.sv:40: $finish called at 515 (1s)

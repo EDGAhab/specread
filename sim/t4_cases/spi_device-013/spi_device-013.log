@@ -1,0 +1,32 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs/spi_device_pkg_sim.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+mut.sv:44: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+orig.sv:45: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:82: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:93: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:45: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:82: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:93: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+--- compile exit: 0 ---
+--- sim stdout ---
+S1 valid_o=1 data_o=9c valid_m=0 data_m=9c
+S1 RESULT: DIFFER -- orig byte-valid after 8 windows, mutated (wrong reset count) not valid yet
+tb.sv:25: $finish called at 76 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

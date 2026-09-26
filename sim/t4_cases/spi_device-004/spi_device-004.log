@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs/prim_flop_2sync.sv prim_flop_3sync.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+C4 co=2 cm=3
+C4 RESULT: DIFFER -- orig pulse arrives in 2 cycles (within spec bound), mutated needs 3 (violates it)
+tb.sv:32: $finish called at 446 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

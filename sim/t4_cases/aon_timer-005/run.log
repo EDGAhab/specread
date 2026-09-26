@@ -1,0 +1,4 @@
+T4-005 sleep=1,pause=1: wdog_intr_o=0 wdog_intr_m=1
+T4-005 sleep=0: wdog_intr_o=1 wdog_intr_m=0
+T4-005 RESULT: DIFFER -- orig pauses in sleep, mutated counts in sleep and halts awake
+/home/hatch/workspace/specbench/build/sim_t4/aon_timer-005/tb.sv:65: $finish called at 616 (1s)

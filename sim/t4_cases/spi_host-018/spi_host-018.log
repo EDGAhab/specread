@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H18 {last,data}_o=1_4a {last,data}_m=0_95
+H18 RESULT: DIFFER -- orig packs {last=1,data=0x4A}, mutated packs the last flag into the data LSB (0x95, last=0)
+tb.sv:43: $finish called at 26 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

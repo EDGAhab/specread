@@ -1,0 +1,3 @@
+T4-002 cycles to done: orig=32 mut=36
+T4-002 RESULT: DIFFER -- orig completes 8-bit pattern, mutated runs 10 bits
+/home/hatch/workspace/specbench/build/sim_t4/pattgen-002/tb.sv:31: $finish called at 416 (1s)

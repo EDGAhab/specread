@@ -1,0 +1,3 @@
+Q010 byte 0x45 odd-parity: seen_o=1 data_o=45 ferr_o=0 perr_o=0 | seen_m=1 data_m=22 ferr_m=0 perr_m=0
+Q010 RESULT: DIFFER -- mutated RX extracts wrong bit window (0x22 vs 0x45)
+tb.sv:53: $finish called at 2295 (1s)

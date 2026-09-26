@@ -1,0 +1,1 @@
+$ iverilog -g2012 -o sim.vvp lc_ctrl_pkg.sv aon_timer_reg_pkg_sim.sv orig.sv mut.sv tb.sv

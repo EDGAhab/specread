@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H7 vo=1010010100 vm=0100101000
+H7 RESULT: DIFFER -- orig puts the top pair on SD[1:0] first, mutated is off by one bit position
+tb.sv:47: $finish called at 56 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

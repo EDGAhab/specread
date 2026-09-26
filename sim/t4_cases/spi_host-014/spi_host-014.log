@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H14 {last,data}_o=1_4a {last,data}_m=0_00
+H14 RESULT: DIFFER -- orig captures {last=1,data=0x4A} on rd_en, mutated buffer keeps its reset value
+tb.sv:43: $finish called at 36 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

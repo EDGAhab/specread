@@ -1,0 +1,6 @@
+Q002 captured 11 line bits [start,d0..d7,par,stop], MSB=last:
+  orig = 10101001010
+  mut  = 00101001010
+  idle_o=1 idle_m=1
+Q002 RESULT: DIFFER -- mutated frame is one bit short, STOP bit never sent
+tb.sv:44: $finish called at 1835 (1s)

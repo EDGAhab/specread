@@ -1,0 +1,3 @@
+Q009 byte 0x45: seen_o=1 data_o=45 idle_o=1 | seen_m=0 data_m=xx idle_m=0
+Q009 RESULT: DIFFER -- mutated RX stuck mid-frame, byte never sampled
+tb.sv:47: $finish called at 2135 (1s)

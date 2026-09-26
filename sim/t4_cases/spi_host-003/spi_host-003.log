@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H3 rx_data_o=00 rx_data_m=ff
+H3 RESULT: DIFFER -- orig captures zeros from quiet SD lines, mutated captures ones from the wrong reset value
+tb.sv:44: $finish called at 96 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

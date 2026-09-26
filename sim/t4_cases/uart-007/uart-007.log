@@ -1,0 +1,3 @@
+Q007 after 4-clk glitch: seen_o=0 data_o=xx idle_o=1 | seen_m=1 data_m=ff idle_m=1
+Q007 RESULT: DIFFER -- orig ignores glitch, mut receives garbage byte
+tb.sv:42: $finish called at 2375 (1s)

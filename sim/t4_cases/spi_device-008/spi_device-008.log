@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs/prim_flop_2sync.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+C8 saw_o=0 saw_m=1
+C8 RESULT: DIFFER -- orig stays quiet (no de-assertion yet), mutated fires a phantom pulse from SCK activity alone
+tb.sv:26: $finish called at 146 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

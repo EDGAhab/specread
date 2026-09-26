@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H15 sd_o_o=0001 sd_o_m=0000
+H15 RESULT: DIFFER -- orig loads the TX byte on the write handshake, mutated never loads so zeros are transmitted
+tb.sv:42: $finish called at 16 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

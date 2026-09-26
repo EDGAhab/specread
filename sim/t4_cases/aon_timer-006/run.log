@@ -1,0 +1,4 @@
+T4-006 escalate=Off: wkup_intr_o=1 wkup_intr_m=0
+T4-006 escalate=On: wkup_intr_o=0 wkup_intr_m=1
+T4-006 RESULT: DIFFER -- orig halts only when escalated, mutated halts when not escalated
+/home/hatch/workspace/specbench/build/sim_t4/aon_timer-006/tb.sv:70: $finish called at 826 (1s)

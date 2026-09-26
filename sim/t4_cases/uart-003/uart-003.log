@@ -1,0 +1,4 @@
+Q003 phaseA (tx_enable=1): orig=1101001010 mut=1111111111
+Q003 phaseB (tx_enable=0): orig=1111111111 mut=1101001010
+Q003 RESULT: DIFFER -- enable polarity is inverted in mutated RTL
+tb.sv:49: $finish called at 3235 (1s)

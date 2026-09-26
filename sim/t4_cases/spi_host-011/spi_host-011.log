@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H11 rx_data_o=ff rx_data_m=00
+H11 RESULT: DIFFER -- orig latches SD lines when sampling is enabled, mutated latches only when it is disabled
+tb.sv:44: $finish called at 106 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

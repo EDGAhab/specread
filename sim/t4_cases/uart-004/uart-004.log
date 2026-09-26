@@ -1,0 +1,5 @@
+Q004 captured 12 line-bit slots, MSB=last:
+  orig = 111101001010  idle_o=1
+  mut  = 111111111111  idle_m=0
+Q004 RESULT: DIFFER -- mutated TX never shifts, stuck busy forever
+tb.sv:43: $finish called at 1995 (1s)

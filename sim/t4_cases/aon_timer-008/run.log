@@ -1,0 +1,3 @@
+T4-008 count==bite(5): wdog_rst_o=1 wdog_rst_m=0
+T4-008 RESULT: DIFFER -- orig requests reset when count reaches bite threshold (>=), mutated only above (>)
+/home/hatch/workspace/specbench/build/sim_t4/aon_timer-008/tb.sv:68: $finish called at 66 (1s)

@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H5 vo=101001010 (expect 101001010) vm=010010100
+H5 RESULT: DIFFER -- orig transmits MSB first, mutated transmits one bit position late
+tb.sv:47: $finish called at 96 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

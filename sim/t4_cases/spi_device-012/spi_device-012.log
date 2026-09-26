@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs/prim_flop_2sync.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+C12 p_o=0 p_m=1
+C12 RESULT: DIFFER -- orig pulse is one cycle, mutated output sticks high after the first de-assertion
+tb.sv:27: $finish called at 146 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

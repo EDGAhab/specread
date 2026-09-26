@@ -1,0 +1,3 @@
+T4-003 count==bark(5): wdog_intr_o=1 wdog_intr_m=0
+T4-003 RESULT: DIFFER -- orig barks when count hits threshold (>=), mutated only above (>)
+/home/hatch/workspace/specbench/build/sim_t4/aon_timer-003/tb.sv:67: $finish called at 66 (1s)

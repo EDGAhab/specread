@@ -1,0 +1,4 @@
+Q001 during reset: tx_o=1 tx_m=0
+Q001 after reset, TX enabled, line idle: tx_o=1 tx_m=0 idle_o=1 idle_m=1
+Q001 RESULT: DIFFER -- original drives idle-high, mutated holds idle-low
+tb.sv:27: $finish called at 515 (1s)

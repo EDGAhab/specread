@@ -1,0 +1,7 @@
+$ iverilog -g2012 -o sim.vvp /home/hatch/workspace/specbench/sources/sim_scout/stubs/aes_pkg_min.sv orig.sv mut.sv tb.sv
+[exit 0]
+$ vvp sim.vvp
+ORIG_MODEL_ERRORS=0
+RESULT: DIFFER (16 byte mismatches between orig and mut)
+tb.sv:53: $finish called at 50 (1s)
+[exit 0]

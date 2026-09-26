@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "SpecRead: A Benchmark for Specification Comprehension in Hardware Design"
+message: "If you use SpecRead, please cite this dataset."
+type: dataset
+version: 2.1
+authors:
+  - family-names: Huang
+    given-names: Feilian
+    affiliation: "Independent Researcher"
+    orcid: "https://orcid.org/0009-0006-2214-0233"
+license: CC-BY-4.0
+repository-code: "https://github.com/EDGAhab/specread"
+abstract: >-
+  SpecRead is a 385-question benchmark that measures whether large language
+  models understand hardware design specifications, independently of their
+  RTL-generation skill. Four task types: exact retrieval, cross-section
+  reasoning, mutated-spec contradiction detection, and spec-RTL consistency.
+  The 98 spec-RTL items are backed by Icarus Verilog simulation harnesses
+  proving each injected RTL mutation changes observable behavior. Built on
+  the open-source OpenTitan project (Apache-2.0).
+keywords:
+  - benchmark
+  - large language models
+  - hardware design
+  - specification comprehension
+  - EDA
+  - OpenTitan

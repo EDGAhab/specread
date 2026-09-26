@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H9 rx_data_o=07 rx_data_m=00
+H9 RESULT: DIFFER -- orig samples live sd_i in full-cycle mode, mutated samples the stale registered copy
+tb.sv:44: $finish called at 36 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

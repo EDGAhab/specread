@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H4 {last,data}_o=0_00 {last,data}_m=1_ff
+H4 RESULT: DIFFER -- orig RX buffer resets clean, mutated resets to last=1/data=0xFF
+tb.sv:41: $finish called at 13 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

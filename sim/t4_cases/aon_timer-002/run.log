@@ -1,0 +1,3 @@
+T4-002 count==thold(10): wkup_intr_o=1 wkup_intr_m=0
+T4-002 RESULT: DIFFER -- orig fires when count reaches threshold (>=), mutated only above (>)
+/home/hatch/workspace/specbench/build/sim_t4/aon_timer-002/tb.sv:68: $finish called at 116 (1s)

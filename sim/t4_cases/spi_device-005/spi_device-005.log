@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs/prim_flop_2sync.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+C5 saw_o=1 saw_m=0
+C5 RESULT: DIFFER -- orig toggles on the SCK pulse when enabled, mutated ignores it so the de-assertion is missed
+tb.sv:27: $finish called at 146 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

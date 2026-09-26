@@ -1,0 +1,4 @@
+T4-001 running disabled: orig pda=0 pcl=0 | mut pda=0 pcl=0
+T4-001 during reset: orig pda=0 pcl=0 | mut pda=1 pcl=1
+T4-001 RESULT: DIFFER -- orig resets outputs to 0, mutated to 1
+/home/hatch/workspace/specbench/build/sim_t4/pattgen-001/tb.sv:28: $finish called at 58 (1s)

@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs/prim_flop_2sync.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+C3 p_o=0 p_m=1
+C3 RESULT: DIFFER -- orig output idle low after reset, mutated asserts a phantom pulse with no transaction
+tb.sv:23: $finish called at 13 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

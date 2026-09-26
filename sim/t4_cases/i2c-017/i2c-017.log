@@ -1,0 +1,13 @@
+$ iverilog -g2012 -I /home/hatch/workspace/specbench/sources/sim_scout/stubs -o sim.vvp /home/hatch/workspace/specbench/sources/rtl/i2c/i2c_pkg.sv orig.sv mut.sv tb.sv
+orig.sv:125: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:363: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:616: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:125: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:363: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:616: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+[exit 0]
+$ vvp sim.vvp
+CF017 O_sda_during_ack=1 M_sda_during_ack=0 (expect 1 vs 0)
+RESULT: DIFFER -- orig releases SDA for device ACK, mut drives it low
+tb.sv:125: $finish called at 1626 (1s)
+[exit 0]

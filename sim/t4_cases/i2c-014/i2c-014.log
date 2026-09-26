@@ -1,0 +1,13 @@
+$ iverilog -g2012 -I /home/hatch/workspace/specbench/sources/sim_scout/stubs -o sim.vvp /home/hatch/workspace/specbench/sources/rtl/i2c/i2c_pkg.sv orig.sv mut.sv tb.sv
+orig.sv:125: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:363: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:616: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:125: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:363: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:616: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+[exit 0]
+$ vvp sim.vvp
+CF014 O_holdstart_cycles=6 M_holdstart_cycles=11 (expect 6 vs 11)
+RESULT: DIFFER -- START hold time 6 vs 11 cycles
+tb.sv:122: $finish called at 266 (1s)
+[exit 0]

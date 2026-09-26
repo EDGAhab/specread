@@ -1,0 +1,9 @@
+$ iverilog -g2012 -o sim.vvp /home/hatch/workspace/specbench/sources/rtl/i2c/i2c_pkg.sv orig.sv mut.sv tb.sv
+orig.sv:196: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:196: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+[exit 0]
+$ vvp sim.vvp
+BM006 O_host_timeout_seen=0 M_host_timeout_seen=1 (expect 0 vs 1)
+RESULT: DIFFER -- orig silent when target idle, mut raises host_timeout
+tb.sv:50: $finish called at 1306 (1s)
+[exit 0]

@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H19 sd_o_o=0010 sd_o_m=1000
+H19 RESULT: DIFFER -- orig drives the pair on SD[1:0], mutated drives it on SD[3:2]
+tb.sv:42: $finish called at 16 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

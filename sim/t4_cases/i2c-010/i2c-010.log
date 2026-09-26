@@ -1,0 +1,9 @@
+$ iverilog -g2012 -o sim.vvp /home/hatch/workspace/specbench/sources/rtl/i2c/i2c_pkg.sv orig.sv mut.sv tb.sv
+orig.sv:196: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:196: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+[exit 0]
+$ vvp sim.vvp
+BM010 O_start_seen=1 M_start_seen=0 (expect 1 vs 0)
+RESULT: DIFFER -- orig detects START, mut (t_buf threshold) never does
+tb.sv:49: $finish called at 476 (1s)
+[exit 0]

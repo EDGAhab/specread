@@ -1,0 +1,4 @@
+T4-004 enable=0: wkup_intr_o=0 wkup_intr_m=1
+T4-004 enable=1: wkup_intr_o=1 wkup_intr_m=0
+T4-004 RESULT: DIFFER -- orig counts only when enabled, mutated counts only when disabled
+/home/hatch/workspace/specbench/build/sim_t4/aon_timer-004/tb.sv:66: $finish called at 816 (1s)

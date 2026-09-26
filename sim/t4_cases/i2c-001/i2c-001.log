@@ -1,0 +1,9 @@
+$ iverilog -g2012 -o sim.vvp /home/hatch/workspace/specbench/sources/rtl/i2c/i2c_pkg.sv orig.sv mut.sv tb.sv
+orig.sv:196: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:196: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+[exit 0]
+$ vvp sim.vvp
+BM001 O_bus_free=0 M_bus_free=1
+RESULT: DIFFER -- orig holds bus busy after enable, mut reports free at once
+tb.sv:41: $finish called at 125 (1s)
+[exit 0]

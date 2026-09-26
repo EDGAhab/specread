@@ -1,0 +1,3 @@
+T4-006 cycles to done: orig=32 mut=48
+T4-006 RESULT: DIFFER -- orig completes after 2 repetitions, mutated after 3
+/home/hatch/workspace/specbench/build/sim_t4/pattgen-006/tb.sv:30: $finish called at 536 (1s)

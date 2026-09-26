@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H1 sd_o_o=0000 sd_o_m=0001
+H1 RESULT: DIFFER -- orig shift reg clears on sw_rst, mutated holds 0xFF and would transmit stale bits
+tb.sv:41: $finish called at 13 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

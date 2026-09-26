@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs/prim_flop_2sync.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+C2 saw_o=0 saw_m=1
+C2 RESULT: DIFFER -- orig emits no pulse (no SCK activity), mutated fabricates one from the wrong reset value
+tb.sv:25: $finish called at 126 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---

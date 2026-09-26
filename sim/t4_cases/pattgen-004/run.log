@@ -1,0 +1,3 @@
+T4-004 after completion: orig pda=0 pcl=0 | mut pda=1 pcl=0
+T4-004 RESULT: DIFFER -- orig returns pda to inactive 0 (END state), mutated stays active
+/home/hatch/workspace/specbench/build/sim_t4/pattgen-004/tb.sv:29: $finish called at 6156 (1s)

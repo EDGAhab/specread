@@ -1,0 +1,4 @@
+Q008 phaseA (rx_enable=1): seen_o=1 data_o=45 | seen_m=0 data_m=xx
+Q008 phaseB (rx_enable=0): seen_o=0 data_o=45 | seen_m=1 data_m=45
+Q008 RESULT: DIFFER -- enable polarity is inverted in mutated RTL
+tb.sv:50: $finish called at 3935 (1s)

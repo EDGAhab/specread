@@ -1,0 +1,13 @@
+$ iverilog -g2012 -I /home/hatch/workspace/specbench/sources/sim_scout/stubs -o sim.vvp /home/hatch/workspace/specbench/sources/rtl/i2c/i2c_pkg.sv orig.sv mut.sv tb.sv
+orig.sv:125: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:363: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+orig.sv:616: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:125: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:363: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+mut.sv:616: vvp.tgt sorry: Case unique/unique0 qualities are ignored.
+[exit 0]
+$ vvp sim.vvp
+CF012 O_bits_per_byte=8 M_bits_per_byte=7 (expect 8 vs 7)
+RESULT: DIFFER -- orig ships 8 bits/byte, mut ships 7
+tb.sv:132: $finish called at 1626 (1s)
+[exit 0]

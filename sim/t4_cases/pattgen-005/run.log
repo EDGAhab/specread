@@ -1,0 +1,4 @@
+T4-005 before flip: orig pcl=1 mut pcl=1 (should match)
+T4-005 after polarity flip while enabled: orig pcl=1 mut pcl=0
+T4-005 RESULT: DIFFER -- orig ignores config write while enabled, mutated latches it
+/home/hatch/workspace/specbench/build/sim_t4/pattgen-005/tb.sv:28: $finish called at 156 (1s)

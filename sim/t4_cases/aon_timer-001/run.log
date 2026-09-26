@@ -1,0 +1,3 @@
+T4-001 cycles from prescaler-reset to wkup intr: orig=19 mut=18
+T4-001 RESULT: DIFFER -- orig resets prescaler to 0 on WKUP_CTRL write, mutated to 1
+/home/hatch/workspace/specbench/build/sim_t4/aon_timer-001/tb.sv:70: $finish called at 236 (1s)

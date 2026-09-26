@@ -1,0 +1,10 @@
+$ iverilog -g2012 -o sim.vvp -I /home/hatch/workspace/specbench/sources/work_a/sim_scout/stubs /home/hatch/workspace/specbench/sources/rtl/spi_host/spi_host_cmd_pkg.sv orig.sv mut.sv tb.sv
+--- compile stdout ---
+--- compile stderr ---
+--- compile exit: 0 ---
+--- sim stdout ---
+H2 rx_valid_o=0 rx_valid_m=1 rx_data_m=00
+H2 RESULT: DIFFER -- orig reports no received byte after reset, mutated spuriously claims one is valid
+tb.sv:41: $finish called at 13 (1s)
+--- sim stderr ---
+--- DIFFER seen: True ---
