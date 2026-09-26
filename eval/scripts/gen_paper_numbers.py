@@ -306,12 +306,12 @@ def main():
                 "crossref_conflict": "CROSSREF_CONFLICT", "deleted_condition": "MISSING_CONDITION"}
     for _op, _lname in _opmap.items():
         _c = sum(1 for _r in _t3items if _r["mutation"]["type"] == _op)
-        mac(f"T3Op{_lname}", str(_c))
+        mac(f"TthreeOp{_lname}", str(_c))
     for _cat, _lname in _catmap.items():
         _c = sum(1 for _r in _t3items if _t3cat(_r) == _cat)
-        mac(f"T3Cat{_lname}", str(_c))
+        mac(f"TthreeCat{_lname}", str(_c))
     _diff = sum(1 for _r in _t3items if _t3cat(_r) != _default.get(_r["mutation"]["type"]))
-    mac("T3CatDiff", str(_diff))
+    mac("TthreeCatDiff", str(_diff))
     # t4: count items with rule field (dataset completeness)
     _t4items = [_r for _r in (json.loads(_l) for _l in open(
         os.path.join(os.path.expanduser("~/workspace/specbench/release/data"),
@@ -321,7 +321,7 @@ def main():
         _ga = json.loads(_ga) if isinstance(_ga, str) else _ga
         return bool(_ga.get("rule"))
     _with_rule = sum(1 for _r in _t4items if _has_rule(_r))
-    mac("T4WithRule", f"{_with_rule}/{len(_t4items)}")
+    mac("TfourWithRule", f"{_with_rule}/{len(_t4items)}")
     # ---- prompt-sensitivity: t4 controls with variant prompt ----
     _pv = [json.loads(_l) for _l in open("responses_controls_mistral_promptvar.jsonl")]
     def _pv_compliant(_resp):
@@ -411,6 +411,14 @@ def main():
     wok, wn = A[("with_spec", "all")]
     ook, on = A[("without_spec", "all")]
     mac("AblDeltaOverall", pct(wok / wn - ook / on))
+    # t1+t2 combined without-spec (the contamination-relevant subset; t3/t4 without-spec
+    # is uninformative by construction)
+    _t12_ok = A[("without_spec", 1)][0] + A[("without_spec", 2)][0]
+    _t12_n = A[("without_spec", 1)][1] + A[("without_spec", 2)][1]
+    mac("AblWithoutToneTwo", f"{_t12_ok}/{_t12_n}")
+    mac("AblWithoutAccToneTwo", pct(_t12_ok / _t12_n))
+    _lo, _hi = wilson(_t12_ok, _t12_n)
+    mac("AblWithoutCIToneTwo", f"[{fmt(_lo)}, {fmt(_hi)}]")
 
     # ---- lenient-threshold sensitivity (appendix; replaces adjudicated) ----
     # t1/t2: no gray zone for exact match -> same as conservative
