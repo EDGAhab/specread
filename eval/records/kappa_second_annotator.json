@@ -1,0 +1,47 @@
+{
+ "n": 24,
+ "agree": 17,
+ "po": 0.7083,
+ "first_ok_rate": 0.4583,
+ "claude_ok_rate": 0.3333,
+ "pe": 0.5139,
+ "cohens_kappa": 0.4,
+ "disagreements": [
+  {
+   "id": "hmac-t3-020",
+   "first": "OK",
+   "claude": "WRONG"
+  },
+  {
+   "id": "aes-t3-006",
+   "first": "OK",
+   "claude": "WRONG"
+  },
+  {
+   "id": "spi_device-t3-002",
+   "first": "WRONG",
+   "claude": "OK"
+  },
+  {
+   "id": "aes-t4-008",
+   "first": "OK",
+   "claude": "WRONG"
+  },
+  {
+   "id": "aes-t4-003",
+   "first": "WRONG",
+   "claude": "OK"
+  },
+  {
+   "id": "aes-t4-010",
+   "first": "OK",
+   "claude": "WRONG"
+  },
+  {
+   "id": "aes-t4-004",
+   "first": "OK",
+   "claude": "WRONG"
+  }
+ ],
+ "second_annotator": "Claude Opus 5.5 (Anthropic), blinded, independent"
+}
