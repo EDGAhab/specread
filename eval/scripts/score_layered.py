@@ -20,11 +20,14 @@ Decision-level (t4, mutations + consistent-RTL controls combined):
   NO_CONTRADICTION verdict); pred_compliant otherwise
 - reports balanced accuracy, precision, recall, F1, MCC
 
-Gray-zone lower bound: strict accuracy with every adjudicated item counted WRONG
-(i.e. the 26 adjudicated-OK flipped to WRONG).
+Gray-zone lower bound: strict accuracy with every adjudicated item counted WRONG.
+Run with --conservative to skip adjudications.json entirely and count every
+gray-zone (ambiguous) item as WRONG: fully scripted, no human/LLM judgment.
 """
 import sys, os, json, re, math
 from collections import Counter, defaultdict
+
+CONSERVATIVE = "--conservative" in sys.argv
 
 EVAL = os.path.expanduser("~/workspace/specbench/build/eval")
 sys.path.insert(0, EVAL)
@@ -59,8 +62,33 @@ def loc_frac(resp, q):
     gtoks = sm.distinctive_tokens(loc_text)
     rtoks = set(sm.distinctive_tokens(resp))
     if not gtoks:
-        return 1.0
-    return sum(1 for t in gtoks if t in rtoks) / len(gtoks)
+        return 1.0, 0, 0
+    hit = sum(1 for t in gtoks if t in rtoks)
+    return hit / len(gtoks), hit, len(gtoks)
+
+
+def verdict_loc_ok(resp, q):
+    """Verdict+location under conservative scoring (no adjudication, no judgment).
+
+    verdict_ok: the response asserts a contradiction (not a NO_CONTRADICTION
+    miss: parseable category absent AND explicit NO_CONTRADICTION verdict).
+    loc_ok: distinctive-token overlap >= 0.45 on the cited location, with the
+    precision guard (cited >5x gold tokens -> wrong). Gray zone
+    (0.25 <= overlap < 0.45) counts as wrong. Category is ignored.
+    """
+    g = q["gold_answer"]
+    g = json.loads(g) if isinstance(g, str) else g
+    ru = resp.upper()
+    loc, cat = sm.extract_json_loccat(resp)
+    verdict_miss = (cat is None and "NO_CONTRADICTION" in ru)
+    lf, hit, n = loc_frac(resp, q)
+    prec_flag = False
+    if n:
+        cited_toks = sm.distinctive_tokens(loc or "")
+        if len(cited_toks) > 5 * n:
+            prec_flag = True
+    loc_ok = (lf >= 0.45) and not prec_flag
+    return (not verdict_miss) and loc_ok
 
 
 def t4_loc_frac(resp, q):
@@ -76,7 +104,9 @@ def t4_loc_frac(resp, q):
 
 def main():
     qs = sm.load_questions()
-    adj = json.load(open(os.path.join(EVAL, "adjudications.json"))).get("mistral", {})
+    adj = {}
+    if not CONSERVATIVE:
+        adj = json.load(open(os.path.join(EVAL, "adjudications.json"))).get("mistral", {})
     resp_main, resp_ctrl = {}, {}
     with open(os.path.join(EVAL, "responses_main_mistral_v2.jsonl")) as fh:
         for line in fh:
@@ -97,6 +127,8 @@ def main():
     adj_ok_by_type = Counter()              # adjudicated OK per type (for lower bound)
 
     for qid, r in sorted(resp_main.items()):
+        if qid not in qs:
+            continue  # deprecated item (gold audit 2026-09-27), not scored
         q = qs[qid]
         t = q["task_type"]
         af = q["answer_format"]
@@ -111,8 +143,11 @@ def main():
                 ok = (a["verdict"] == "OK")
                 amb = False
             if amb:
-                print(f"UNADJUDICATED AMBIGUOUS: {qid} -- {note}")
-                continue
+                if CONSERVATIVE:
+                    ok = False  # gray zone counts as WRONG, fully scripted
+                else:
+                    print(f"UNADJUDICATED AMBIGUOUS: {qid} -- {note}")
+                    continue
             strict_by_type[t] += ok
             if a and a["verdict"] == "OK":
                 adj_ok_by_type[t] += 1
@@ -120,7 +155,7 @@ def main():
             # location: "not wrong" boundary (overlap >= 0.25); the strict score
             # requires >= 0.45, which is why layered "both" can exceed strict.
             # category: JSON-parsed label else single-token-presence fallback.
-            lf = loc_frac(resp, q) if t == 3 else t4_loc_frac(resp, q)
+            lf, _, _ = loc_frac(resp, q) if t == 3 else (t4_loc_frac(resp, q), 0, 0)
             gc = gold_cat(q)
             pc = predict_category(resp)
             # layers are pure auto-scorer outputs (no adjudication folding);
@@ -152,6 +187,22 @@ def main():
               f"cat={L['cat_ok']}/{n}={L['cat_ok']/n:.3f} "
               f"both={L['both']}/{n}={L['both']/n:.3f} "
               f"strict={L['strict_ok']}/{n}={L['strict_ok']/n:.3f}")
+    # ---- verdict+location (conservative): primary headline measure for t3/t4.
+    # Verdict correct + location overlap >= 0.45 (gray zone wrong, precision
+    # guard applied); category ignored. Fully deterministic, no adjudication.
+    print("=== verdict+location (t3/t4, conservative) ===")
+    for t in (3, 4):
+        vl_n = vl_ok_n = 0
+        for qid, r in sorted(resp_main.items()):
+            if qid not in qs:
+                continue  # deprecated item (gold audit 2026-09-27), not scored
+            q = qs[qid]
+            if q["task_type"] != t or q["answer_format"] != "location+category":
+                continue
+            vl_n += 1
+            if verdict_loc_ok(r.get("response", ""), q):
+                vl_ok_n += 1
+        print(f"t{t}: n={vl_n} vl={vl_ok_n}/{vl_n}={vl_ok_n/vl_n:.3f}")
     print("=== t3 confusion (gold x pred) ===")
     for gc in CATS:
         row = " ".join(f"{conf[3][(gc, pc)]:3d}" for pc in CATS + ["NONE"])
@@ -163,6 +214,67 @@ def main():
     print("=== t3 by operator (strict) ===")
     for mop in sorted(op):
         print(f"  {mop}: {op_ok[mop]}/{op[mop]}={op_ok[mop]/op[mop]:.3f}")
+
+    # ---- deleted_condition location-only re-analysis ----
+    # For the hardest operator, count a response as finding the conflict when
+    # its cited location overlaps the gold location at/above the automatic-
+    # wrong threshold (0.25), ignoring category. Pure auto-scorer, no judgment.
+    dc_n = dc_loc = 0
+    for qid, r in sorted(resp_main.items()):
+        if qid not in qs:
+            continue  # deprecated item (gold audit 2026-09-27), not scored
+        q = qs[qid]
+        if q["task_type"] != 3:
+            continue
+        if (q.get("mutation") or {}).get("type") != "deleted_condition":
+            continue
+        dc_n += 1
+        lf_dc, _, _ = loc_frac(r.get("response", ""), q)
+        if lf_dc >= 0.25:
+            dc_loc += 1
+    print(f"=== deleted_condition location-only: {dc_loc}/{dc_n}={dc_loc/dc_n:.3f} ===")
+
+    # ---- t3 verdict-level: 171 mutated (gold: violation) + 41 distractors
+    # (gold: consistent). pred_violation = asserts a contradiction.
+    def t3_pred_violation(resp):
+        ru = resp.upper()
+        loc, cat = sm.extract_json_loccat(resp)
+        if cat is None and "NO_CONTRADICTION" in ru:
+            return False
+        # affirmative contradiction claim
+        if cat:
+            return True
+        if re.search(r"contradiction|inconsisten|violation|mismatch", resp, re.I):
+            return True
+        return False
+
+    T3TP = T3FN = T3FP = T3TN = 0
+    for qid, r in sorted(resp_main.items()):
+        if qid not in qs:
+            continue  # deprecated item (gold audit 2026-09-27), not scored
+        q = qs[qid]
+        if q["task_type"] == 3 and q["answer_format"] == "location+category":
+            if t3_pred_violation(r.get("response", "")):
+                T3TP += 1
+            else:
+                T3FN += 1
+    # distractors live in resp_main with answer_format verdict+explanation
+    for qid, r in sorted(resp_main.items()):
+        if qid not in qs:
+            continue  # deprecated item (gold audit 2026-09-27), not scored
+        q = qs[qid]
+        if q["answer_format"] == "verdict+explanation":
+            cls, _ = sm.score_distractor(r.get("response", ""))
+            if cls == "FP":
+                T3FP += 1
+            elif cls == "TN":
+                T3TN += 1
+    t3_tpr = T3TP / (T3TP + T3FN) if (T3TP + T3FN) else 0.0
+    t3_tnr = T3TN / (T3TN + T3FP) if (T3TN + T3FP) else 0.0
+    t3_bal = (t3_tpr + t3_tnr) / 2
+    print("=== t3 verdict-level (171 mutated + distractors) ===")
+    print(f"TP={T3TP} FN={T3FN} FP={T3FP} TN={T3TN}")
+    print(f"TPR={t3_tpr:.3f} TNR={t3_tnr:.3f} balanced_acc={t3_bal:.3f}")
 
     # ---- t4 decision-level: mutations + controls ----
     def pred_violation(resp):
@@ -179,6 +291,8 @@ def main():
 
     TP = FN = FP = TN = 0
     for qid, r in sorted(resp_main.items()):
+        if qid not in qs:
+            continue  # deprecated item (gold audit 2026-09-27), not scored
         q = qs[qid]
         if q["task_type"] == 4 and q["answer_format"] == "location+category":
             if pred_violation(r.get("response", "")):

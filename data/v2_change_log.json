@@ -1,79 +1,110 @@
 {
- "label_conversions": [
-  {
-   "id": "uart-t4-001",
-   "old": "WRONG_RESET_VALUE",
-   "new": "NUMERIC_MISMATCH"
+  "label_conversions": [
+    {
+      "id": "uart-t4-001",
+      "old": "WRONG_RESET_VALUE",
+      "new": "NUMERIC_MISMATCH"
+    },
+    {
+      "id": "uart-t4-002",
+      "old": "OFF_BY_ONE",
+      "new": "NUMERIC_MISMATCH"
+    },
+    {
+      "id": "uart-t4-003",
+      "old": "INVERTED_ENABLE",
+      "new": "RULE_INVERSION"
+    },
+    {
+      "id": "uart-t4-004",
+      "old": "MISSING_FSM_TRANSITION",
+      "new": "MISSING_CONDITION"
+    },
+    {
+      "id": "uart-t4-005",
+      "old": "FIELD_OFFSET_ERROR",
+      "new": "NUMERIC_MISMATCH"
+    },
+    {
+      "id": "uart-t4-006",
+      "old": "WRONG_RESET_VALUE",
+      "new": "NUMERIC_MISMATCH"
+    },
+    {
+      "id": "uart-t4-007",
+      "old": "OFF_BY_ONE",
+      "new": "NUMERIC_MISMATCH"
+    },
+    {
+      "id": "uart-t4-008",
+      "old": "INVERTED_ENABLE",
+      "new": "RULE_INVERSION"
+    },
+    {
+      "id": "uart-t4-009",
+      "old": "MISSING_FSM_TRANSITION",
+      "new": "MISSING_CONDITION"
+    },
+    {
+      "id": "uart-t4-010",
+      "old": "FIELD_OFFSET_ERROR",
+      "new": "NUMERIC_MISMATCH"
+    }
+  ],
+  "dropped_distractors": [
+    "uart-t3d-003"
+  ],
+  "note": "Exhaustive staleness audit found v1 t4 excerpts already correct (coordinator fix applied); no excerpt changes in v2. SCORES_v1 '7 duplicate pairs' claim not reproducible: only 1 true duplicate prompt pair found (uart-t3d-001/uart-t3d-003).",
+  "v2_1_repair": {
+    "date": "2026-09-25",
+    "description": "15 t2 multiple-choice prompts omitted their option lists while the format instruction asked for a letter. Appended 4 labeled options (A-D) to each question; correct option placed at shuffled letter (final MC gold distribution A:7 B:7 C:4 D:4); gold_answer set to the letter. Distractor options authored from the same spec excerpts. Affected ids: spi_device-t2-001..007, spi_host-t2-001..008. v2 file untouched; v2.1 is the released dataset.",
+    "ids": [
+      "spi_device-t2-001",
+      "spi_device-t2-002",
+      "spi_device-t2-003",
+      "spi_device-t2-004",
+      "spi_device-t2-005",
+      "spi_device-t2-006",
+      "spi_device-t2-007",
+      "spi_host-t2-001",
+      "spi_host-t2-002",
+      "spi_host-t2-003",
+      "spi_host-t2-004",
+      "spi_host-t2-005",
+      "spi_host-t2-006",
+      "spi_host-t2-007",
+      "spi_host-t2-008"
+    ]
   },
-  {
-   "id": "uart-t4-002",
-   "old": "OFF_BY_ONE",
-   "new": "NUMERIC_MISMATCH"
-  },
-  {
-   "id": "uart-t4-003",
-   "old": "INVERTED_ENABLE",
-   "new": "RULE_INVERSION"
-  },
-  {
-   "id": "uart-t4-004",
-   "old": "MISSING_FSM_TRANSITION",
-   "new": "MISSING_CONDITION"
-  },
-  {
-   "id": "uart-t4-005",
-   "old": "FIELD_OFFSET_ERROR",
-   "new": "NUMERIC_MISMATCH"
-  },
-  {
-   "id": "uart-t4-006",
-   "old": "WRONG_RESET_VALUE",
-   "new": "NUMERIC_MISMATCH"
-  },
-  {
-   "id": "uart-t4-007",
-   "old": "OFF_BY_ONE",
-   "new": "NUMERIC_MISMATCH"
-  },
-  {
-   "id": "uart-t4-008",
-   "old": "INVERTED_ENABLE",
-   "new": "RULE_INVERSION"
-  },
-  {
-   "id": "uart-t4-009",
-   "old": "MISSING_FSM_TRANSITION",
-   "new": "MISSING_CONDITION"
-  },
-  {
-   "id": "uart-t4-010",
-   "old": "FIELD_OFFSET_ERROR",
-   "new": "NUMERIC_MISMATCH"
+  "v2_2_gold_audit": {
+    "date": "2026-09-27",
+    "description": "Gold-evidence audit of gray-zone items (second annotator: Claude Opus 5.5). Two type-4 items removed from the bank (385 -> 383).",
+    "removed": [
+      {
+        "id": "aes-t4-009",
+        "reason": "duplicate: mutation semantically identical to aes-t4-007; dropped"
+      },
+      {
+        "id": "spi_device-t4-015",
+        "reason": "gold rule (rx_order) unsupported by the mutated excerpt; deprecated and removed"
+      }
+    ],
+    "excerpt_expansions": [
+      {
+        "id": "spi_device-t3-002",
+        "change": "spec_excerpt expanded 263 -> 540 chars to include the 256B-buffer justification sentence the gold rule relies on"
+      },
+      {
+        "id": "spi_device-t3-003",
+        "change": "spec_excerpt expanded to include the 3-bit-field context the gold rule relies on (annotator packet listed this id as spi_device-t3-017 by typo; remapped)"
+      }
+    ],
+    "gold_rule_tightened": [
+      "spi_host-t4-015",
+      "spi_host-t4-018",
+      "spi_device-t4-001",
+      "spi_device-t4-002"
+    ],
+    "note": "Gold was fixed to match the true mutation and excerpt text only; never adjusted to fit model responses. Gray-zone re-adjudication after repair: 93 items, agreement 83/93, Cohen's kappa 0.77."
   }
- ],
- "dropped_distractors": [
-  "uart-t3d-003"
- ],
- "note": "Exhaustive staleness audit found v1 t4 excerpts already correct (coordinator fix applied); no excerpt changes in v2. SCORES_v1 '7 duplicate pairs' claim not reproducible: only 1 true duplicate prompt pair found (uart-t3d-001/uart-t3d-003).",
- "v2_1_repair": {
-  "date": "2026-09-25",
-  "description": "15 t2 multiple-choice prompts omitted their option lists while the format instruction asked for a letter. Appended 4 labeled options (A-D) to each question; correct option placed at shuffled letter (final MC gold distribution A:7 B:7 C:4 D:4); gold_answer set to the letter. Distractor options authored from the same spec excerpts. Affected ids: spi_device-t2-001..007, spi_host-t2-001..008. v2 file untouched; v2.1 is the released dataset.",
-  "ids": [
-   "spi_device-t2-001",
-   "spi_device-t2-002",
-   "spi_device-t2-003",
-   "spi_device-t2-004",
-   "spi_device-t2-005",
-   "spi_device-t2-006",
-   "spi_device-t2-007",
-   "spi_host-t2-001",
-   "spi_host-t2-002",
-   "spi_host-t2-003",
-   "spi_host-t2-004",
-   "spi_host-t2-005",
-   "spi_host-t2-006",
-   "spi_host-t2-007",
-   "spi_host-t2-008"
-  ]
- }
 }

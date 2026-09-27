@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""SpecRead v2.1 MAIN eval — 385 questions + 42 distractors x 2 models = 854 calls.
+"""SpecRead v1 MAIN eval — 385 questions + 42 distractors x 2 models = 854 calls.
 
 Adapted from pilot/model_testing/run_pilot.py (the proven pipeline).
-Protocol: ../EVAL_PROTOCOL.md (eval/EVAL_PROTOCOL.md)
+Pre-registered protocol: ~/workspace/specbench/EVAL_PROTOCOL.md
 
 Changes from pilot:
-- question files: data/spec_read_v2_1.jsonl + data/distractors_v2.jsonl
+- question files: build/spec_read_v1.jsonl + build/distractors_v1.jsonl
 - models: gemini-flash-lite-latest, ministral-3b-latest only (free tier; NO Groq)
 - prompt template is IP-generic (10 IPs, not UART-only)
 - t3 verdict-commit tweak (EVAL_PROTOCOL.md): the t3 location+category prompt
@@ -14,7 +14,7 @@ Changes from pilot:
 - max_workers=2; longer exponential backoff on 429; never hammer.
 - prompts built ONCE per question id and shared across models; prompt_sha256
   is stored per call to prove prompt identity across models.
-- output: one responses file per model under eval/records/.
+- output: one responses file per model under build/eval/.
 """
 import sys, os, json, time, hashlib, random, urllib.request, threading
 from concurrent.futures import ThreadPoolExecutor
@@ -26,8 +26,8 @@ from datetime import datetime, timezone
 # 15s (~4 RPM, polite share) and relies on exponential backoff for gaps; the
 # run automatically speeds up when the saturation ends. Mistral 2s (shared
 # with the ruletable worker, uncongested).
-PACE = {"gemini": 15.0, "mistral": 2.0}
-_next_ok = {"gemini": 0.0, "mistral": 0.0}
+PACE = {"gemini": 15.0, "mistral": 2.0, "mistral_small": 8.0}
+_next_ok = {"gemini": 0.0, "mistral": 0.0, "mistral_small": 0.0}
 _pace_lock = threading.Lock()
 
 
@@ -39,32 +39,13 @@ def pace(provider):
     if wait > 0:
         time.sleep(wait)
 
+sys.path.insert(0, "/opt/hatch/skills/skill-creator/bin")
+from dynamic_credentials import add_surrogate_to_request, read_json_response
 
-# Public-release auth: API keys come from environment variables.
-#   GEMINI_API_KEY  -> https://generativelanguage.googleapis.com (appended as ?key=)
-#   MISTRAL_API_KEY -> https://api.mistral.ai (Authorization: Bearer)
-GEMINI_AUTH = ("gemini", os.environ.get("GEMINI_API_KEY", ""))
-MISTRAL_AUTH = ("mistral", os.environ.get("MISTRAL_API_KEY", ""))
-
-def read_json_response(resp):
-    return json.load(resp)
-
-def _with_auth(url, auth):
-    kind, key = auth
-    if kind == "gemini":
-        return url + "?key=" + key
-    return url
-
-def _auth_headers(auth):
-    headers = {"Content-Type": "application/json", "User-Agent": UA}
-    if auth[0] == "mistral":
-        headers["Authorization"] = "Bearer " + auth[1]
-    return headers
-
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = os.path.join(ROOT, "data")
-RECORDS = os.path.join(ROOT, "eval", "records")
-os.makedirs(RECORDS, exist_ok=True)
+BASE = os.path.expanduser("~/workspace/specbench")
+BUILD = os.path.join(BASE, "build")
+EVAL = os.path.join(BUILD, "eval")
+os.makedirs(EVAL, exist_ok=True)
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
@@ -114,6 +95,11 @@ def build_prompt(q):
                           'in the excerpts, do not refuse the premise, explain, or ask '
                           'for clarification — instead reply with exactly NO_CONTRADICTION '
                           'and nothing else.')
+        else:
+            # t4 (v2.1b): give the model an explicit compliant-answer option so
+            # consistent-RTL controls are answerable without forced guessing
+            fmt_instr += (' If the RTL complies with the spec excerpt, reply with '
+                          'exactly {"verdict": "NO_CONTRADICTION"} and no other text.')
     elif af == "verdict+explanation":
         fmt_instr = ('Reply in JSON with exactly two keys: "verdict" (either "consistent" '
                      'or "contradiction") and "explanation" (one or two sentences). '
@@ -125,10 +111,13 @@ def build_prompt(q):
                                   question=q["question"], fmt_instr=fmt_instr)
 
 
-def post_json(url, payload, auth, allowed_hosts, timeout=150):
+def post_json(url, payload, cred, allowed_hosts, timeout=150):
     data = json.dumps(payload).encode()
-    req = urllib.request.Request(_with_auth(url, auth), data=data,
-                                 headers=_auth_headers(auth))
+    req = urllib.request.Request(url, data=data,
+                                 headers={"Content-Type": "application/json",
+                                          "User-Agent": UA})
+    add_surrogate_to_request(req, cred, entry_name="access_token",
+                             allowed_hosts=allowed_hosts)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return read_json_response(resp)
 
@@ -139,7 +128,7 @@ def call_gemini(prompt):
         "gemini-flash-lite-latest:generateContent",
         {"contents": [{"parts": [{"text": prompt}]}],
          "generationConfig": {"temperature": 0, "maxOutputTokens": 512}},
-        GEMINI_AUTH, ("generativelanguage.googleapis.com",))
+        "custom.gemini2", ("generativelanguage.googleapis.com",))
     cands = out.get("candidates", [])
     return "".join(p.get("text", "") for p in cands[0].get("content", {}).get("parts", [])) if cands else ""
 
@@ -149,7 +138,7 @@ def call_mistral(prompt):
         "https://api.mistral.ai/v1/chat/completions",
         {"model": "ministral-3b-latest", "temperature": 0, "max_tokens": 512,
          "messages": [{"role": "user", "content": prompt}]},
-        MISTRAL_AUTH, ("api.mistral.ai",))
+        "custom.mistral", ("api.mistral.ai",))
     ch = out.get("choices", [])
     return ch[0].get("message", {}).get("content", "") if ch else ""
 
@@ -157,16 +146,16 @@ def call_mistral(prompt):
 MODELS = [("gemini", "gemini-flash-lite-latest", call_gemini),
           ("mistral", "ministral-3b-latest", call_mistral)]
 
-MODEL_OUT = {"gemini": os.path.join(RECORDS, "responses_main_gemini_v2.jsonl"),
-             "mistral": os.path.join(RECORDS, "responses_main_mistral_v2.jsonl")}
+MODEL_OUT = {"gemini": os.path.join(EVAL, "responses_main_gemini_v2.jsonl"),
+             "mistral": os.path.join(EVAL, "responses_main_mistral_v2.jsonl")}
 
 
 def load_items():
     items, distractors = [], []
-    with open(os.path.join(DATA, "spec_read_v2_1.jsonl")) as fh:
+    with open(os.path.join(BUILD, "spec_read_v2_1.jsonl")) as fh:
         for line in fh:
             items.append(json.loads(line))
-    with open(os.path.join(DATA, "distractors_v2.jsonl")) as fh:
+    with open(os.path.join(BUILD, "distractors_v2.jsonl")) as fh:
         for line in fh:
             distractors.append(json.loads(line))
     return items, distractors
@@ -234,7 +223,7 @@ def main():
         print(f"filtered to {len(order)} items (TASK_TYPES={task_types} ITEM_IDS={item_ids})",
               flush=True)
     else:
-        with open(os.path.join(RECORDS, "call_order.json"), "w") as fh:
+        with open(os.path.join(EVAL, "call_order.json"), "w") as fh:
             json.dump({"seed": 20260925, "order": [q["id"] for q in order]}, fh)
     print(f"call order (seed 20260925): {[q['id'] for q in order][:10]} ... "
           f"total {len(order)}", flush=True)

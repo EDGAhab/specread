@@ -120,7 +120,7 @@ def score_response(resp, q):
 
 def load_questions():
     qs = {}
-    base = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "data")
+    base = os.path.expanduser("~/workspace/specbench/build")
     # SAMPLE_FILE env override for v2 re-runs (eval_sample_60_v2.jsonl)
     sample_fn = os.environ.get("SAMPLE_FILE", "eval_sample_60.jsonl")
     for fn in [sample_fn]:

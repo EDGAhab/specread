@@ -197,6 +197,10 @@ def main():
     cm = C["mistral"]
     tot_ok = sum(cm[t][0] for t in (1, 2, 3, 4))
     tot_n = sum(cm[t][1] for t in (1, 2, 3, 4))
+    # ---- dataset size macros (script-generated, do not hand-edit) ----
+    mac("NTotal", tot_n)
+    for t in (1, 2, 3, 4):
+        mac(f"N{numword[t]}", cm[t][1])
     mac("ConsToverall", f"{tot_ok}/{tot_n}")
     mac("ConsAccoverall", pct(tot_ok / tot_n))
     lo, hi = wilson(tot_ok, tot_n)
@@ -450,6 +454,16 @@ def main():
     dc_ok, dc_n, dc_acc = LC["dc_loc"]
     mac("DcLocOnly", f"{dc_ok}/{dc_n}")
     mac("DcLocOnlyAcc", pct(dc_acc))
+
+    # ---- gray-zone double annotation (independent script; macros verbatim) ----
+    adj_out = run(["adjudicate_gray.py"])
+    for _al in adj_out.splitlines():
+        _al = _al.strip()
+        if _al.startswith("\\newcommand"):
+            lines.append(_al)
+        elif _al.startswith("% Gray-zone"):
+            lines.append("")
+            lines.append(_al)
 
     out_path = os.path.join(PAPER, "numbers.tex")
     with open(out_path, "w") as fh:

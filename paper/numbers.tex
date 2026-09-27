@@ -2,9 +2,14 @@
 % Conservative = main results. Acc* macros are PERCENTAGES (use with \%).
 % Len* = deterministic lenient-threshold sensitivity (overlap >= 0.25).
 
-\newcommand{\ConsToverall}{128/385}
-\newcommand{\ConsAccoverall}{33.2}
-\newcommand{\ConsCIoverall}{[0.287, 0.381]}
+\newcommand{\NTotal}{383}
+\newcommand{\NTone}{58}
+\newcommand{\NTtwo}{58}
+\newcommand{\NTthree}{171}
+\newcommand{\NTfour}{96}
+\newcommand{\ConsToverall}{128/383}
+\newcommand{\ConsAccoverall}{33.4}
+\newcommand{\ConsCIoverall}{[0.289, 0.383]}
 \newcommand{\ConsTone}{32/58}
 \newcommand{\ConsAccTone}{55.2}
 \newcommand{\ConsCITone}{[0.425, 0.673]}
@@ -14,10 +19,10 @@
 \newcommand{\ConsTthree}{42/171}
 \newcommand{\ConsAccTthree}{24.6}
 \newcommand{\ConsCITthree}{[0.187, 0.315]}
-\newcommand{\ConsTfour}{24/98}
-\newcommand{\ConsAccTfour}{24.5}
-\newcommand{\ConsCITfour}{[0.170, 0.339]}
-\newcommand{\ConsMacroAvg}{39.0}
+\newcommand{\ConsTfour}{24/96}
+\newcommand{\ConsAccTfour}{25.0}
+\newcommand{\ConsCITfour}{[0.174, 0.345]}
+\newcommand{\ConsMacroAvg}{39.1}
 \newcommand{\ConsOpChangedNumber}{21/53}
 \newcommand{\ConsAccOpChangedNumber}{39.6}
 \newcommand{\ConsOpCrossrefConflict}{9/30}
@@ -32,33 +37,33 @@
 \newcommand{\CtrlFPR}{41/41}
 \newcommand{\CtrlAccFPR}{100.0}
 \newcommand{\CtrlCIFPR}{[0.914, 1.000]}
-\newcommand{\DecTP}{97}
+\newcommand{\DecTP}{95}
 \newcommand{\DecFN}{1}
 \newcommand{\DecFP}{41}
 \newcommand{\DecTN}{0}
 \newcommand{\DecBalAcc}{49.5}
 \newcommand{\DecMCC}{-0.06}
-\newcommand{\DecPrec}{70.3}
+\newcommand{\DecPrec}{69.9}
 \newcommand{\DecRec}{99.0}
-\newcommand{\DecFone}{82.2}
+\newcommand{\DecFone}{81.9}
 \newcommand{\ConsVLTthree}{82/171}
 \newcommand{\ConsAccVLTthree}{48.0}
 \newcommand{\ConsCIVLTthree}{[0.406, 0.554]}
-\newcommand{\ConsVLTfour}{62/98}
-\newcommand{\ConsAccVLTfour}{63.3}
-\newcommand{\ConsCIVLTfour}{[0.534, 0.721]}
+\newcommand{\ConsVLTfour}{62/96}
+\newcommand{\ConsAccVLTfour}{64.6}
+\newcommand{\ConsCIVLTfour}{[0.546, 0.734]}
 \newcommand{\LayAccTthreeCat}{49.7}
 \newcommand{\LayTthreeCat}{85/171}
-\newcommand{\LayAccTfourCat}{43.9}
-\newcommand{\LayTfourCat}{43/98}
+\newcommand{\LayAccTfourCat}{43.8}
+\newcommand{\LayTfourCat}{42/96}
 \newcommand{\LayAccTthreeLoc}{78.9}
 \newcommand{\LayTthreeLoc}{135/171}
 \newcommand{\LayAccTthreeBoth}{40.4}
 \newcommand{\LayTthreeBoth}{69/171}
-\newcommand{\LayAccTfourLoc}{81.6}
-\newcommand{\LayTfourLoc}{80/98}
-\newcommand{\LayAccTfourBoth}{36.7}
-\newcommand{\LayTfourBoth}{36/98}
+\newcommand{\LayAccTfourLoc}{81.2}
+\newcommand{\LayTfourLoc}{78/96}
+\newcommand{\LayAccTfourBoth}{36.5}
+\newcommand{\LayTfourBoth}{35/96}
 \newcommand{\TthreeVerdTP}{171}
 \newcommand{\TthreeVerdFN}{0}
 \newcommand{\TthreeVerdFP}{21}
@@ -84,10 +89,10 @@
 \newcommand{\ConfTThreeMissMiss}{2}
 \newcommand{\ConfTFourNumNum}{12}
 \newcommand{\ConfTFourNumRule}{26}
-\newcommand{\ConfTFourNumCross}{6}
+\newcommand{\ConfTFourNumCross}{5}
 \newcommand{\ConfTFourNumMiss}{6}
 \newcommand{\ConfTFourRuleNum}{0}
-\newcommand{\ConfTFourRuleRule}{22}
+\newcommand{\ConfTFourRuleRule}{21}
 \newcommand{\ConfTFourRuleCross}{2}
 \newcommand{\ConfTFourRuleMiss}{2}
 \newcommand{\ConfTFourCrossNum}{3}
@@ -170,9 +175,9 @@
 \newcommand{\AblWithoutToneTwo}{3/20}
 \newcommand{\AblWithoutAccToneTwo}{15.0}
 \newcommand{\AblWithoutCIToneTwo}{[0.052, 0.360]}
-\newcommand{\LenOverall}{167/385}
-\newcommand{\LenAccoverall}{43.4}
-\newcommand{\LenCIoverall}{[0.385, 0.484]}
+\newcommand{\LenOverall}{166/383}
+\newcommand{\LenAccoverall}{43.3}
+\newcommand{\LenCIoverall}{[0.385, 0.483]}
 \newcommand{\LenTone}{32/58}
 \newcommand{\LenAccTone}{55.2}
 \newcommand{\LenCITone}{[0.425, 0.673]}
@@ -182,9 +187,30 @@
 \newcommand{\LenTthree}{69/171}
 \newcommand{\LenAccTthree}{40.4}
 \newcommand{\LenCITthree}{[0.333, 0.478]}
-\newcommand{\LenTfour}{36/98}
-\newcommand{\LenAccTfour}{36.7}
-\newcommand{\LenCITfour}{[0.279, 0.466]}
-\newcommand{\LenMacroAvg}{46.0}
+\newcommand{\LenTfour}{35/96}
+\newcommand{\LenAccTfour}{36.5}
+\newcommand{\LenCITfour}{[0.275, 0.464]}
+\newcommand{\LenMacroAvg}{45.9}
 \newcommand{\DcLocOnly}{28/37}
 \newcommand{\DcLocOnlyAcc}{75.7}
+
+% Gray-zone double annotation v2 (adjudicate_gray.py) -- DO NOT EDIT
+\newcommand{\AdjudN}{93}
+\newcommand{\AdjudAgree}{83/93}
+\newcommand{\AdjudAgreePct}{89.2}
+\newcommand{\AdjudKappa}{0.77}
+\newcommand{\AdjudFirstOK}{36/93}
+\newcommand{\AdjudFirstAccOK}{38.7}
+\newcommand{\AdjudOpusOK}{36/93}
+\newcommand{\AdjudOpusAccOK}{38.7}
+\newcommand{\AdjudMergedOK}{33/93}
+\newcommand{\AdjudMergedAccOK}{35.5}
+\newcommand{\AdjudMergedWrong}{60/93}
+\newcommand{\AdjudBothWrong}{52}
+\newcommand{\AdjudBothOK}{31}
+\newcommand{\AdjudFirstWrongOpusOK}{5}
+\newcommand{\AdjudFirstOKOpusWrong}{5}
+\newcommand{\AdjudDisagree}{10}
+\newcommand{\AdjudFirstTranscriptionErr}{2}
+\newcommand{\AdjudVOneWins}{5}
+\newcommand{\AdjudVTwoWins}{5}

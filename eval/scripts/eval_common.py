@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Shared prompting + API call helpers for SpecRead v1 phase-3 experiments.
 
-Follows eval/EVAL_PROTOCOL.md exactly:
+Follows ~/workspace/specbench/EVAL_PROTOCOL.md exactly:
 - standard prompt = spec excerpt (+ rtl for t4) + question + format instruction,
   incl. the t3 verdict-commit tweak (DECISION.md caveat 4).
 - temperature 0, one question per call, identical prompts across models.
@@ -9,31 +9,11 @@ Follows eval/EVAL_PROTOCOL.md exactly:
 import sys, os, json, time, hashlib, random, urllib.request
 from datetime import datetime, timezone
 
+sys.path.insert(0, "/opt/hatch/skills/skill-creator/bin")
+from dynamic_credentials import add_surrogate_to_request, read_json_response
 
-# Public-release auth: API keys come from environment variables.
-#   GEMINI_API_KEY  -> appended as ?key= to the generativelanguage URL
-#   MISTRAL_API_KEY -> Authorization: Bearer on api.mistral.ai
-GEMINI_AUTH = ("gemini", os.environ.get("GEMINI_API_KEY", ""))
-MISTRAL_AUTH = ("mistral", os.environ.get("MISTRAL_API_KEY", ""))
-
-def read_json_response(resp):
-    return json.load(resp)
-
-def _with_auth(url, auth):
-    kind, key = auth
-    if kind == "gemini":
-        return url + "?key=" + key
-    return url
-
-def _auth_headers(auth):
-    headers = {"Content-Type": "application/json", "User-Agent": UA}
-    if auth[0] == "mistral":
-        headers["Authorization"] = "Bearer " + auth[1]
-    return headers
-
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-BASE = os.path.join(ROOT, "data")
-EVALDIR = os.path.join(ROOT, "eval", "records")
+BASE = os.path.expanduser("~/workspace/specbench/build")
+EVALDIR = os.path.join(BASE, "eval")
 os.makedirs(EVALDIR, exist_ok=True)
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -109,6 +89,9 @@ def fmt_instruction(q):
                  f'(exactly one of: {", ".join(cats)}). No text outside the JSON.')
         if q["task_type"] == 3:
             instr += t3_verdict_tweak()
+        else:
+            instr += (' If the RTL complies with the spec excerpt, reply with '
+                      'exactly {"verdict": "NO_CONTRADICTION"} and no other text.')
         return instr
     raise ValueError(f"unknown answer_format {af}")
 
@@ -144,10 +127,13 @@ def load_sample():
     return items
 
 
-def post_json(url, payload, auth, allowed_hosts, timeout=150):
+def post_json(url, payload, cred, allowed_hosts, timeout=150):
     data = json.dumps(payload).encode()
-    req = urllib.request.Request(_with_auth(url, auth), data=data,
-                                 headers=_auth_headers(auth))
+    req = urllib.request.Request(url, data=data,
+                                 headers={"Content-Type": "application/json",
+                                          "User-Agent": UA})
+    add_surrogate_to_request(req, cred, entry_name="access_token",
+                             allowed_hosts=allowed_hosts)
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return read_json_response(resp)
 
@@ -158,7 +144,7 @@ def call_gemini(prompt, max_tokens=512):
         "gemini-flash-lite-latest:generateContent",
         {"contents": [{"parts": [{"text": prompt}]}],
          "generationConfig": {"temperature": 0, "maxOutputTokens": max_tokens}},
-        GEMINI_AUTH, ("generativelanguage.googleapis.com",))
+        "custom.gemini2", ("generativelanguage.googleapis.com",))
     cands = out.get("candidates", [])
     if not cands:
         return ""
@@ -170,7 +156,7 @@ def call_mistral(prompt, max_tokens=512):
         "https://api.mistral.ai/v1/chat/completions",
         {"model": "ministral-3b-latest", "temperature": 0, "max_tokens": max_tokens,
          "messages": [{"role": "user", "content": prompt}]},
-        MISTRAL_AUTH, ("api.mistral.ai",))
+        "custom.mistral", ("api.mistral.ai",))
     ch = out.get("choices", [])
     return ch[0].get("message", {}).get("content", "") if ch else ""
 
