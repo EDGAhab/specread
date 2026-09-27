@@ -1,0 +1,687 @@
+{
+ "items": {
+  "aes-t3-001": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model quoted the mutated 9/11/12-rounds sentence but paired it with the irrelevant throughput sentence; the actual rounds-vs-cycle-count contradiction was never identified",
+   "merge_reason": "v2_leniency",
+   "opus": "OK",
+   "v1": "WRONG",
+   "winner": "v1"
+  },
+  "aes-t3-005": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model cited only the START 0x0 table side and never mentioned the mutated 0xf reset default; no contradiction identified",
+   "merge_reason": "v1_leniency",
+   "opus": "WRONG",
+   "v1": "OK",
+   "winner": "v2"
+  },
+  "aes-t3-006": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "aes-t3-007": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "aes-t3-017": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "aes-t3-018": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "aes-t4-001": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "aes-t4-002": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model cited line 22 (CIPH_FWD, unmutated original), not the planted mutation on line 23 (CIPH_INV 2'h2)",
+   "merge_reason": "v1_no_original_check",
+   "opus": "WRONG",
+   "v1": "OK",
+   "winner": "v2"
+  },
+  "aes-t4-003": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "aes-t4-004": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model cited line 27 (CIPH_FWD, unmutated original), not the planted mutation on line 28 (CIPH_INV 2'h2)",
+   "merge_reason": "v1_no_original_check",
+   "opus": "WRONG",
+   "v1": "OK",
+   "winner": "v2"
+  },
+  "aes-t4-006": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "aes-t4-007": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "aes-t4-008": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "aes-t4-010": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "aes-t4-011": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "aes-t4-012": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "aon_timer-t3-003": {
+   "disagreement": true,
+   "final": "OK",
+   "merge_note": "raw response category is CROSSREF_CONFLICT == gold; v1_reason wrongly claimed MISSING_CONDITION; model cites the exact mutated 'program pre-scaler in WDOG_CTRL' step",
+   "merge_reason": "v1_transcription_error",
+   "opus": "OK",
+   "v1": "WRONG",
+   "winner": "v2"
+  },
+  "hmac-t3-001": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "hmac-t3-005": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "hmac-t3-009": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "hmac-t3-019": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "hmac-t3-020": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "hmac-t3-021": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "hmac-t3-023": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "hmac-t3-024": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "hmac-t3-025": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "i2c-t3-005": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "i2c-t3-010": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "i2c-t3-014": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "i2c-t3-015": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "i2c-t4-001": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "i2c-t4-002": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "i2c-t4-005": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "i2c-t4-007": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "i2c-t4-012": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "i2c-t4-016": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "i2c-t4-017": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "i2c-t4-019": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-003": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-011": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-014": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model paired the mutated 'must be 1 if SHA3 or KMAC' clause with the non-contradictory static-interface sentence; the actual conflicting row ('Only applicable to SHAKE and cSHAKE') was never cited",
+   "merge_reason": "v2_leniency",
+   "opus": "OK",
+   "v1": "WRONG",
+   "winner": "v1"
+  },
+  "kmac-t3-016": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-017": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-019": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-020": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "kmac-t3-022": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-025": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "kmac-t3-026": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "pattgen-t4-002": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "rv_timer-t3-011": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "rv_timer-t3-014": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_device-t3-002": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model's cited pair ('512B max' vs 'payload_depth is the maximum') is mutually consistent; no contradiction stated. Gold-evidence caveat recorded: the 256B justification is absent from the excerpt (not fixed)",
+   "merge_reason": "v2_leniency",
+   "opus": "OK",
+   "v1": "WRONG",
+   "winner": "v1"
+  },
+  "spi_device-t3-003": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model paired '0 to 16 cycles' with 'conventionally require 8' (8 lies inside 0-16; no contradiction). Gold-evidence caveat recorded: the 3-bit-field justification is absent from the excerpt (not fixed)",
+   "merge_reason": "v2_leniency",
+   "opus": "OK",
+   "v1": "WRONG",
+   "winner": "v1"
+  },
+  "spi_device-t3-004": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_device-t3-005": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t3-006": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t3-007": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_device-t3-008": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_device-t3-009": {
+   "disagreement": true,
+   "final": "OK",
+   "merge_note": "model quoted the exact mutated 'all four SPI modes' sentence with RULE_INVERSION == gold; the meta-text second quote is noise, not a different invented mutation",
+   "merge_reason": "v2_misread",
+   "opus": "WRONG",
+   "v1": "OK",
+   "winner": "v1"
+  },
+  "spi_device-t3-010": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t3-011": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t3-012": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t3-013": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t3-014": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_device-t3-018": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t4-001": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t4-002": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t4-003": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_device-t4-006": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_device-t4-011": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-001": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_host-t3-002": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_host-t3-003": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_host-t3-004": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_host-t3-006": {
+   "disagreement": true,
+   "final": "WRONG",
+   "merge_note": "model's category is CROSSREF_CONFLICT != gold RULE_INVERSION; v1 missed the category when passing it",
+   "merge_reason": "v1_transcription_error",
+   "opus": "WRONG",
+   "v1": "OK",
+   "winner": "v2"
+  },
+  "spi_host-t3-007": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-009": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-010": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-011": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_host-t3-012": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_host-t3-014": {
+   "disagreement": false,
+   "final": "OK",
+   "opus": "OK",
+   "v1": "OK",
+   "winner": "agree"
+  },
+  "spi_host-t3-015": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-016": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-017": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-018": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-019": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t3-020": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t4-005": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t4-006": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t4-013": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t4-015": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "spi_host-t4-018": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  },
+  "uart-t3-009": {
+   "disagreement": false,
+   "final": "WRONG",
+   "opus": "WRONG",
+   "v1": "WRONG",
+   "winner": "agree"
+  }
+ },
+ "n": 93,
+ "summary": {
+  "agree": 83,
+  "id_remap": {
+   "spi_device-t3-017": "spi_device-t3-003"
+  },
+  "kappa": 0.7734,
+  "merged_ok": 33,
+  "merged_wrong": 60,
+  "v1_wins": 5,
+  "v2_wins": 5
+ }
+}
